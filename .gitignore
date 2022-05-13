@@ -1,3 +1,6 @@
+# Paths
+/target/**
+
 # Compiled class file
 *.class
 

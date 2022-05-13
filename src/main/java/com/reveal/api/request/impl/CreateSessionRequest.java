@@ -55,10 +55,14 @@ public class CreateSessionRequest extends APIRequest {
 		if(getResponse().isPresent()) {
 			CreateSessionResponse response = getResponse().get();
 			if(response.getStatus() >= HttpStatus.SC_OK) {
-				LOGGER.log(Level.INFO, "Received AuthorizationToken: "+response.getAuthorizationToken().getToken());
-				APIRequestUtlity.setAuthToken(response.getAuthorizationToken());
+				if(response.getAuthorizationToken() != null && response.getAuthorizationToken().getToken() != null) {
+					LOGGER.log(Level.INFO, "Received AuthorizationToken: "+response.getAuthorizationToken().getToken());
+					APIRequestUtlity.setAuthToken(response.getAuthorizationToken());
+				} else {
+					LOGGER.log(Level.INFO, "Bad response received. Check login details. status="+response.getStatus());	
+				}
 			} else {
-				LOGGER.log(Level.INFO, "Bad response received. Check login details. status="+response.getStatus());	
+				LOGGER.log(Level.INFO, "Bad response received. Check login details. status="+status);	
 			}
 		}
 	}
